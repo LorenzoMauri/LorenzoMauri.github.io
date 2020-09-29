@@ -1,0 +1,47 @@
+/*titolo*/
+
+h1 {font-family: monospace;font-size: 30px;}
+
+h3 {font-style: italic;
+    font-size: 18px;
+    position:relative;
+    left:30px;
+    top:2px;
+    color:rgb(233, 53, 53);}
+
+/* filtri */
+
+#leakage{position:relative;
+    left:30px;
+    top:2px;}
+
+#outline_pressure{
+    position:relative;
+    left:30px;
+    top:2px;  
+}
+
+#outflow_text {font-size: 30px;
+    font-style: italic;
+    color: black;
+    position: relative;
+    top: 1px ;
+    font-family: sans-serif;
+    text-align: center;}
+
+#outflow_text[children='red'] {
+    color: red;
+}
+
+#outflow_text[children='green'] {
+    color:green;
+}
+
+/*div {background-color:grey;}*/
+
+#pump_types {position:relative;
+     left:30px;
+      top:2px;
+      width: 40%;
+
+}
