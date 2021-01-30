@@ -30,14 +30,14 @@
     // create 2 data_set
 
 
-
+var data_csv = []
 d3.csv("https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/DATIcartellaDiProva.csv")
         .get(function(data) {
-            console.log(data[1000].provincia)
+        var data_csv = data
         });
 
 
-
+console.log(data_csv)
     var data =  [
        {cat: "Ristorante", value: 20, group : 'Lecco',venduto:1000},
        {cat: "Bar", value: 10,group : 'Lecco',venduto:2000},
