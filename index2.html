@@ -3,92 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizzazione</title>
+    <link rel="stylesheet" href="cssStylesheet.css">
+    <title>Document</title>
 </head>
-<body>
-    <h1> il bello di utilizzare codice html</h1>
-
-
-
-    <div class='tableauPlaceholder' id='viz1611306008523' style='position: relative'>
-        <noscript>
-            <a href='https:&#47;&#47;github.com&#47;LorenzoMauri&#47;LorenzoMauri.github.io'>
-             <img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;M7&#47;M7B6QNF8Q&#47;1_rss.png' style='border: none' />
-            </a>
-        </noscript>
-        <object class='tableauViz'  style='display:none;'>
-            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> 
-            <param name='path' value='shared&#47;M7B6QNF8Q' /> 
-            <param name='toolbar' value='yes' />
-            <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;M7&#47;M7B6QNF8Q&#47;1.png' /> 
-            <param name='animate_transition' value='yes' />
-            <param name='display_static_image' value='yes' />
-            <param name='display_spinner' value='yes' />
-            <param name='display_overlay' value='yes' />
-            <param name='display_count' value='yes' />
-            <param name='language' value='it' />
-            <param name='filter' value='publish=yes' />
-            </object>
-            </div>                
-                <script type='text/javascript'>             
-                       var divElement = document.getElementById('viz1611306008523');       
-                       var vizElement = divElement.getElementsByTagName('object')[0];            
-                        if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1366px';vizElement.style.height='795px';} 
-                        else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1366px';vizElement.style.height='795px';}
-                        else { vizElement.style.width='100%';vizElement.style.height='1127px';}              
-                       var scriptElement = document.createElement('script');                 
-                       scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                   
-                        vizElement.parentNode.insertBefore(scriptElement, vizElement);              
-                  </script>
-
-<script type='text/javascript'>
-var viz, sheet, table;
-
-function initViz() {
-		var containerDiv = document.getElementById("vizContainer"),
-                    url = "https://public.tableau.com/profile/lorenzo8599#!/vizhome/VIZ_16110635714310/Dashboard1?publish=yes",
-                    options = {
-                        hideTabs: true,
-                        hideToolbar: true,
-                        onFirstInteractive: function () {
-                            document.getElementById('getData').disabled = false; // Enable our button
-                        }
-                    };
-                viz = new tableau.Viz(containerDiv, url, options);
-            }
-
-initViz();
-
-
-
-function getUnderlyingData(){
-                sheet = viz.getWorkbook().getActiveSheet().getWorksheets().get("Dashboard 1");
-		 // If the active sheet is not a dashboard, then you can just enter:
-		 // viz.getWorkbook().getActiveSheet();
-                options = {
-                    maxRows: 10, // Max rows to return. Use 0 to return all rows
-                    ignoreAliases: false,
-                    ignoreSelection: true,
-                    includeAllColumns: false
-                };
-
-                sheet.getUnderlyingDataAsync(options).then(function(t){
-                       table = t;
-			var tgt = document.getElementById("dataTarget");
-			tgt.innerHTML = "<h4>Underlying Data:</h4><p>" + JSON.stringify(table.getData()) + "</p>";
-                });
-            }
-        </script>
-
-
-</script>
-
-<div class="page-header">
-    <h1>getData() Basic Example</h1>
-    <p>Click the "Get Data" button to get underlying data for the viz.</p>
-    <button id="getData" onclick="getUnderlyingData()" class="btn">Get Data</button>
+<body onload="update()">
+    <!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<div id = 'titlePage'>
+  <center>
+    <h1>Incassi attività Horeca</h1>
+</center>
 </div>
-<div id="dataTarget"></div>
+
+
+<!-- Add 2 buttons -->
+<center>
+<button onclick="update(data,'Lecco')">Lecco</button>
+<button onclick="update(data,'Milano')">Milano</button>
+</center>
+<!-- Create a div where the graph will take place -->
+<div>
+    <center id="my_dataviz"></center>
+</div>
+<script>
+
+    // create 2 data_set
+
+
+
+d3.csv("https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/DATIcartellaDiProva.csv")
+        .get(function(data) {
+            console.log(data[1000].provincia)
+        });
+
+
+
+    var data =  [
+       {cat: "Ristorante", value: 20, group : 'Lecco',venduto:1000},
+       {cat: "Bar", value: 10,group : 'Lecco',venduto:2000},
+       {cat: "Gelateria", value: 8,group : 'Milano',venduto:359200},
+       {cat: "Hotel", value: 5,group : 'Milano',venduto:900000},
+       {cat: "Piadineria", value: 10,group : 'Lecco',venduto:900},
+       {cat: "Pub", value: 10,group : 'Milano',venduto: 1346803}
+    ];
+    
+    // set the dimensions and margins of the graph
+    var margin = {top: 30, right: 30, bottom: 70, left: 60},
+        width = 460 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+    
+    // append the svg object to the body of the page
+    var svg = d3.select("#my_dataviz")
+      .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform",
+              "translate(" + margin.left+ "," + margin.top + ")");
+    
+    // X axis
+    var x = d3.scaleBand()
+      .range([ 0, width ])
+      .domain(data.map(function(d) { return d.cat; }))
+      .padding(0.2);
+    svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x))
+    
+    // Add Y axis
+    var y = d3.scaleLinear()
+      .domain([0, 20])
+      .range([ height, 0]);
+    svg.append("g")
+      .attr("class", "myYaxis")
+      .call(d3.axisLeft(y));
+    
+    // A function that create / update the plot for a given variable:
+    function update(data,citta) {
+      
+      if (citta == 'Lecco'){
+        document.getElementById("tooltip_title").textContent = 'Via Palestro';
+        document.getElementById("immagine").src = "https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/lecco.png"
+      } else {
+        document.getElementById("tooltip_title").textContent = 'Piazza Duomo';
+        document.getElementById("immagine").src = "https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/milan.png"}
+      
+        
+      
+      var u = svg.selectAll("rect")
+        .data(data.filter(function(data) {
             
+            return data.group == citta;
+}))
+       
+    
+
+      u
+        .enter()
+        .append("rect")
+        
+        .on('click',function(data){
+            document.getElementById("mySidenav").style.width = "350px";
+            document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "rgba(0,0,0,0.1)";
+        })
+        .on('mouseover',function(data){
+            document.getElementById('fatturato').textContent= data.cat 
+            ;   
+            document.getElementById('venduto').textContent= data.value + '€'
+            
+        })
+        //.on('mouseout',function(){
+          //  document.getElementById("mySidenav").style.width = "0";
+            //document.getElementById("main").style.marginLeft = "0";
+            //document.body.style.backgroundColor = "white";
+
+        //})
+        .merge(u)
+        .transition()
+        .duration(1000)
+          .attr("x", function(d) { return x(d.cat); })
+          .attr("y", function(d) { return y(d.value); })
+          .attr("width", x.bandwidth())
+          .attr("height", function(d) { return height - y(d.value); })
+          .attr("fill", "#69b3a2")
+
+
+    }
+    
+
+
+    // Initialize the plot with the first dataset
+    update(data)
+    
+    
+    function closeNav(){
+       
+          document.getElementById("mySidenav").style.width = "0";
+          document.getElementById("main").style.marginLeft = "0";
+          document.body.style.backgroundColor = "white";
+
+        
+    }
+
+    
+                
+   
+
+    </script>
+
+<!--parte di html-->
+
+
+
+<div id="mySidenav" class="sidenav">
+    <center id = "tooltip_title">
+      <h3>None</h3>
+    </center>
+    <div id="img_tooltip_container">
+      <img  id = 'immagine' src=""></img>
+    </div>
+    
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <center>
+    <div id = 'metriche'>
+    <a> 
+      Tipologia di attività
+      <p id= "fatturato">-</p>
+    </a>
+    <a href="#">Incassi  <p id= "venduto">-</p></a>
+
+  </div>
+</center>
+  </div>
+  
+
+  
+  <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+  <div id="main">
+    ...
+  </div>
+
+  
 </body>
 </html>
