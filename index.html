@@ -1,82 +1,24 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>getData() Basic Example</title>
-		<script type="text/javascript" src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
-        <script type="text/javascript">
-            var viz, sheet, table;
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esempio di utilizzo delle QueryString con Javascript</title>
+</head>
+<body>
+ 
+    <script>
 
-            function initViz() {
-		var containerDiv = document.getElementById("vizContainer"),
-                    url = "https://public.tableau.com/shared/Y559CQXKT?:display_count=y&:origin=viz_share_link",
-                    options = {
-                        hideTabs: true,
-                        hideToolbar: true,
-                        onFirstInteractive: function () {
-                            document.getElementById('dataTarget').disabled = false; // Enable our button
-                        }
-                    };
-                viz = new tableau.Viz(containerDiv, url, options);
-            }
-
-            function getUnderlyingData(){
-                sheet = viz.getWorkbook().getActiveSheet().getWorksheets().get("Foglio 1");
-		 // If the active sheet is not a dashboard, then you can just enter:
-		 // viz.getWorkbook().getActiveSheet();
-                options = {
-                    maxRows: 10, // Max rows to return. Use 0 to return all rows
-                    ignoreAliases: false,
-                    ignoreSelection: true,
-                    includeAllColumns: false
-                };
-
-                sheet.getUnderlyingDataAsync(options).then(function(t){
-                       table = t;
-                       
-                       
-			
-            });
-            }
+        window.onload = function() {
+            var urlString = (window.location.href).toLowerCase()
+            var url = new URL(urlString)
+            var name = url.searchParams.get("name")
+            console.log("my name is : " + name)
+        }
+      
 
 
-            function openNav() {
-  document.getElementById("mySidepanel").style.width = "250px";
-}
-
-/* Set the width of the sidebar to 0 (hide it) */
-function closeNav() {
-  document.getElementById("mySidepanel").style.width = "0";
-}
-
-
-        
-        </script>
-    </head>
-
-    <body onload="initViz();">
-
-        <div class="page-header">
-            <h1>Visualizzazione</h1>
-            <div id="mySidepanel" class="sidepanel">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                <a href="#">About</a>
-                <a href="#">Services</a>
-                <a href="#">Clients</a>
-                <a href="#">Contact</a>
-              </div>
-              
-              <button class="openbtn" onclick="openNav()">&#9776; Toggle Sidepanel</button>
-              <h2>Collapsed Sidepanel</h2>
-              <p>Content...</p>
-            <div id="dataTarget"></div>
-          
-           
-        </div>
-        <div id="vizContainer" style="width:600px; height:600px;"></div>
-        
-    
-        
-        
-    </body>
+    </script>
+</body>
 </html>
 
