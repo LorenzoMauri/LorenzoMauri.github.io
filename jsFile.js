@@ -7,25 +7,6 @@ function urlParser() {
   return city;
   }
   
-var a = 0
-function update(a){
-  var b = 9
-  return b+a
-}  
-
-
-
-
-
-var data =  [
-   {cat: "Ristorante", value: 20, group : 'lecco',venduto:1000},
-   {cat: "Bar", value: 10,group : 'lecco',venduto:2000},
-   {cat: "Gelateria", value: 8,group : 'milano',venduto:359200},
-   {cat: "Hotel", value: 5,group : 'milano',venduto:900000},
-   {cat: "Piadineria", value: 10,group : 'lecco',venduto:900},
-   {cat: "Pub", value: 10,group : 'milano',venduto: 1346803}
-];
-
 
 //console.log(city)
 document.addEventListener("DOMContentLoaded", function(){
