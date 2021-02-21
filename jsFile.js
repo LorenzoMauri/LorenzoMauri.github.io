@@ -8,11 +8,11 @@ function urlParser() {
   }
   
 
-//console.log(city)
+
 document.addEventListener("DOMContentLoaded", function(){
   var city = urlParser()
  
-  d3.csv("https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/DATIcartellaDiProva.csv")
+  d3.csv("https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/data.csv")
     .get(function(data) {
       var filteredData = (data.filter((data)=> data.citta == city))
       
