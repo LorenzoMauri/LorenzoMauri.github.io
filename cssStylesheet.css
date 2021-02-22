@@ -1,4 +1,7 @@
 
+body{opacity: 80%;
+background-color: rgb(214, 214, 214);}
+
 #info {font-family: Arial, Helvetica, sans-serif;
       font-size: 15pt;}
 
@@ -11,11 +14,9 @@
   padding: 10px;
 }
 
-
 .canva{
-
   position: absolute;
-  top : 50%
+  top : 40%
 }
 
 
