@@ -19,6 +19,16 @@ function aggregatorSold(filteredData){
 }
 
 
+var myVar;
+
+function myFunction() {
+  myVar = setTimeout(showPage, 500);
+}
+
+function showPage() {
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("myDiv").style.display = "block";
+}
 
 var margin = {top: 50, right: 30, bottom: 90, left: 100},
 width = 460 - margin.left - margin.right,
