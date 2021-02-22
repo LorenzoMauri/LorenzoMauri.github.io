@@ -1,9 +1,15 @@
 
 body{opacity: 80%;
-background-color: rgb(214, 214, 214);}
+background-color: rgb(255, 255, 255);}
 
-#info {font-family: Arial, Helvetica, sans-serif;
+#infoVenduto {font-family:  Helvetica;
       font-size: 15pt;}
+
+#infoCity{font-family:  Calibri; 
+  font-weight: 100;
+  font-size: 20pt;
+  
+font-style: italic;}
 
 #infoContainer{
   margin: auto;

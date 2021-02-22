@@ -104,6 +104,8 @@ document.addEventListener("DOMContentLoaded", function(){
                     .call(d3.axisLeft(y));
 
 // Bars
+
+
 svg.selectAll("mybar")
   .data(data)
   .enter()
@@ -114,6 +116,10 @@ svg.selectAll("mybar")
     // no bar at the beginning thus:
     .attr("height", function(d) { return height - y(0); }) // always equal to 0
     .attr("y", function(d) { return y(0); })
+    .on('mouseover',function(d){document.getElementById('infoVenduto').textContent = d.Value + ' euro' })
+    .on('mouseout',function(d){document.getElementById('infoVenduto').textContent = counter + ' euro' })
+    //on('mouseout',)
+    
 
 // Animation
 svg.selectAll("rect")
@@ -122,6 +128,7 @@ svg.selectAll("rect")
   .attr("y", function(d) { return y(d.Value); })
   .attr("height", function(d) { return height - y(d.Value); })
   .delay(function(d,i){console.log(i) ; return(i*100)})
+  
 
 
   
