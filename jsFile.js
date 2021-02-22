@@ -18,6 +18,8 @@ function aggregatorSold(filteredData){
     return counter
 }
 
+
+
 var margin = {top: 50, right: 30, bottom: 90, left: 100},
 width = 460 - margin.left - margin.right,
 height = 450 - margin.top - margin.bottom;
@@ -32,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function(){
     .get(function(data) {
                         var filteredData = (data.filter((data)=> data.citta == city))
       
-                        console.log(filteredData)  
+                        //console.log(filteredData)  
 
                         var counter = aggregatorSold(filteredData)
 
@@ -46,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function(){
                                   'Value' : parseInt(filteredData[i].venduto,10)}
                           data.push(dict)
                         }
-                        console.log(data)
+                        //console.log(data)
 
                        
                     // append the svg object to the body of the page
@@ -74,8 +76,19 @@ document.addEventListener("DOMContentLoaded", function(){
                         .style("text-anchor", "end");
                     
                     // Add Y axis
+                    var count = 0
+                    for (i=0;i<data.length;i++){
+                      value = parseInt(data[i].Value,10)
+                      if(value > count){
+                        count = value
+                    
+                      }
+                 
+                    }
+                    
+      
                     var y = d3.scaleLinear()
-                      .domain([0, 5500000])
+                      .domain([0, count*1.3])
                       .range([ height, 0]);
                     svg.append("g")
                     .call(d3.axisLeft(y));

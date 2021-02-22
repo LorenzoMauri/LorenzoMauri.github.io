@@ -9,3 +9,12 @@
 
 #info {font-family: Arial, Helvetica, sans-serif;
       font-size: 15pt;}
+
+#infoContainer{
+  margin: auto;
+  width: 50%;
+  
+  border-bottom:1px ridge grey;
+  border-radius: 0%;
+  padding: 10px;
+}
