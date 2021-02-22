@@ -1,29 +1,39 @@
 body{opacity: 80%;
-background-color: rgb(255, 255, 255);}
+background-color: rgb(255, 255, 255);
+height: 1000px;}
 
-#infoVenduto {font-family:  Helvetica;
-      font-size: 15pt;}
+#containerVenduto {
+      position: relative;
+      left: 130%;
+      top: -70pt;
+      text-align: center;
+      font-family:  Helvetica;
+      font-size: 10pt;
+      white-space: nowrap;}
 
 #infoCity{font-family:  Calibri; 
   font-weight: 100;
   font-size: 20pt;
+  text-align: center;
   
 font-style: italic;}
 
+
 #infoContainer{
-  margin: auto;
-  width: 50%;
-  border-top: 1px ridge grey ;
-  border-bottom:1px ridge grey;
+  position: relative;
+  text-align: center;
+  width: 150px;
+  height: 200px;
+  left: 5%;
+  border-right: 1px ridge grey;;
   border-radius: 0%;
   padding: 10px;
 }
 
 .canva{
-  position: absolute;
-  top : 40%
+  position: relative;
+  top : 100pt;
 }
-
 
 .loader {
   position: absolute;

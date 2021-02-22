@@ -31,7 +31,7 @@ function showPage() {
 }
 
 var margin = {top: 50, right: 30, bottom: 90, left: 100},
-width = 460 - margin.left - margin.right,
+width = 700 - margin.left - margin.right,
 height = 450 - margin.top - margin.bottom;
 
 
@@ -44,14 +44,25 @@ document.addEventListener("DOMContentLoaded", function(){
     .get(function(data) {
                         var filteredData = (data.filter((data)=> data.citta == city))
       
-                        //console.log(filteredData)  
+                        console.log(filteredData)  
 
                         var counter = aggregatorSold(filteredData)
 
-                        //console.log(counter)
+                        //console.log(filteredData[0].provincia)
 
                         document.getElementById('infoCity').textContent = city;
                         document.getElementById('infoVenduto').textContent = counter + ' euro';
+                        
+                        document.getElementById('infoProvince').textContent= filteredData[0].provincia
+                        document.getElementById('infoRegion').textContent= filteredData[0].regione
+                        document.getElementById('infoMacroRegion').textContent= filteredData[0].macroregione
+
+
+                        
+                        // da qui in poi la variabile data viene cambiata per costruire il grafico 
+                        // a barre 
+                        
+                        
                         var data = []
                         for (i=0;i<filteredData.length;i++){
                           dict = {'Country' : filteredData[i]['payment method'],
@@ -116,7 +127,7 @@ svg.selectAll("mybar")
     // no bar at the beginning thus:
     .attr("height", function(d) { return height - y(0); }) // always equal to 0
     .attr("y", function(d) { return y(0); })
-    .on('mouseover',function(d){document.getElementById('infoVenduto').textContent = d.Value + ' euro' })
+    .on('mouseover',function(d){document.getElementById('infoVenduto').textContent = d.Value + 'euro' })
     .on('mouseout',function(d){document.getElementById('infoVenduto').textContent = counter + ' euro' })
     //on('mouseout',)
     
