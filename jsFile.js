@@ -18,6 +18,24 @@ function aggregatorSold(filteredData){
     return counter
 }
 
+// Wrap every letter in a span
+var textWrapper = document.querySelector('.ml3');
+textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+anime.timeline({loop: false})
+  .add({
+    targets: '.ml3 .letter',
+    opacity: [0,1],
+    easing: "easeInOutQuad",
+    duration: 1000,
+    delay: (el, i) => 150 * (i+1)
+  }).add({
+    targets: '.ml3',
+    opacity: 40,
+    duration: 1000,
+    easing: "easeOutExpo",
+    delay: 1000
+  });
 
 var myVar;
 
@@ -31,7 +49,7 @@ function showPage() {
 }
 
 var margin = {top: 50, right: 30, bottom: 90, left: 100},
-width = 700 - margin.left - margin.right,
+width = 460 - margin.left - margin.right,
 height = 450 - margin.top - margin.bottom;
 
 
@@ -124,6 +142,7 @@ svg.selectAll("mybar")
     .attr("x", function(d) { return x(d.Country); })
     .attr("width", x.bandwidth())
     .attr("fill", "#69b3a2")
+    
     // no bar at the beginning thus:
     .attr("height", function(d) { return height - y(0); }) // always equal to 0
     .attr("y", function(d) { return y(0); })
@@ -138,6 +157,7 @@ svg.selectAll("rect")
   .duration(900)
   .attr("y", function(d) { return y(d.Value); })
   .attr("height", function(d) { return height - y(d.Value); })
+  
   .delay(function(d,i){console.log(i) ; return(i*100)})
   
 
