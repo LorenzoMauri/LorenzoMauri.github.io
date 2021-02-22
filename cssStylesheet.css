@@ -1,6 +1,7 @@
 body{opacity: 80%;
 background-color: rgb(255, 255, 255);
-height: 1000px;}
+height: 1000px;
+width: 500px;}
 
 #containerVenduto {
       position: relative;
@@ -11,6 +12,10 @@ height: 1000px;}
       font-family:  Helvetica;
       font-size: 10pt;
       white-space: nowrap;}
+
+
+
+
 
 #infoCity{font-family:  Calibri; 
   font-weight: 100;
@@ -90,9 +95,15 @@ font-style: italic;}
 
 
 .ml3 {
+  font-family: cursive;
+  background-color: rgb(189, 241, 239);
   text-align: center;
   vertical-align: middle;
   font-weight: 900;
   font-size: 1.5em;
+  
+  
 }
 
+h4{ font-size: xx-large;
+  font-weight: normal;}
