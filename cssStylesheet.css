@@ -42,7 +42,7 @@ font-style: italic;}
           line-height: 100px;}
 .canva{
   position: absolute;
-  top : 300pt;
+  top : 230pt;
 }
 
 .loader {
@@ -95,7 +95,9 @@ font-style: italic;}
 
 
 .ml3 {
-  font-family: cursive;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  position: relative;
+  margin: 0%;
   background-color: rgb(189, 241, 239);
   text-align: center;
   vertical-align: middle;
@@ -105,4 +107,18 @@ font-style: italic;}
   
 }
 
-h4.ml3{width: 500px;}
+.stats{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  position: absolute;
+  top: 210pt;
+  width: 500px;
+  height: 30px;
+  margin: 0%;
+  background-color: rgb(189, 241, 239);
+  text-align: center;
+  vertical-align: middle;
+  font-weight: 900;
+  font-size: 1.5em;
+  
+  
+}
