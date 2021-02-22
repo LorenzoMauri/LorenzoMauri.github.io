@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function(){
                         //console.log(filteredData[0].provincia)
 
                         document.getElementById('infoCity').textContent = city;
-                        document.getElementById('infoVenduto').textContent = counter + ' euro';
+                        document.getElementById('infoVenduto').textContent = counter/1e06;
                         
                         document.getElementById('infoProvince').textContent= filteredData[0].provincia
                         document.getElementById('infoRegion').textContent= filteredData[0].regione
@@ -146,8 +146,8 @@ svg.selectAll("mybar")
     // no bar at the beginning thus:
     .attr("height", function(d) { return height - y(0); }) // always equal to 0
     .attr("y", function(d) { return y(0); })
-    .on('mouseover',function(d){document.getElementById('infoVenduto').textContent = d.Value + 'euro' })
-    .on('mouseout',function(d){document.getElementById('infoVenduto').textContent = counter + ' euro' })
+    .on('mouseover',function(d){var value = d.Value/1e06; document.getElementById('infoVenduto').textContent = value })
+    .on('mouseout',function(d){document.getElementById('infoVenduto').textContent = counter })
     //on('mouseout',)
     
 
