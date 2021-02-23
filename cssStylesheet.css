@@ -4,20 +4,6 @@ background-color: rgb(255, 255, 255);
 height: 800px;
 width: 400px;}
 
-div#windowPanel{
-  width: 110%;
-  height: 100%;
-  margin: 0; /* Space from this element (entire page) and others*/
-  padding: 0; /*space from content and border*/
-
-  border-width: thin;
-  overflow:hidden;
-  border-radius: 5%;
-  border: 1px solid rgb(0, 0, 0);
-  display:block;
-  box-sizing: content-box;
-}
-
 #containerVenduto {
       position: relative;
       height: 170px;
