@@ -148,7 +148,7 @@ svg.selectAll("mybar")
     .attr("height", function(d) { return height - y(0); }) // always equal to 0
     .attr("y", function(d) { return y(0); })
     .on('mouseover',function(d){var value = d.Value/1e06; document.getElementById('infoVenduto').textContent = value.toFixed(2)})
-    .on('mouseout',function(d){var value = (counter/1e06).toFixed(2);document.getElementById('infoVenduto').textContent = value })
+    .on('mouseout',function(d){var c = (counter/1e06).toFixed(2);document.getElementById('infoVenduto').textContent = c })
     //on('mouseout',)
     
 
