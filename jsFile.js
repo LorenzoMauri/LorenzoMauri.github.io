@@ -142,7 +142,7 @@ svg.selectAll("mybar")
   .append("rect")
     .attr("x", function(d) { return x(d.Country); })
     .attr("width", x.bandwidth())
-    .attr("fill", "#69b3a2")
+    .attr("fill", "#e4a965")
     
     // no bar at the beginning thus:
     .attr("height", function(d) { return height - y(0); }) // always equal to 0
