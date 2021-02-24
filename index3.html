@@ -1,61 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="cssStylesheet.css">
     <script src="https://d3js.org/d3.v4.js"></script>
-    
+
     <title>Document</title>
-  
-  
+
+
 
 </head>
 
-<body onload="myFunction()">
-    
-   
+<body onload="showPage()">
+    <button onclick="lastDay()" disabled="true" id="lastDayButton">last day</button>
+
     <h4 class="ml3">Città</h4>
 
 
- 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-    <div id="loader">
+    
+    <div id="loader">Loading...</div>
+    <div style="display:none;" id="statsContainer" class="animate-bottom">
+
+        <br>
+        <br>
+
+        <div id='infoContainer'>
+
+            <div id='cityName'>
+                <h3 id='infoCity'></h3>
+            </div>
+
+            <div id=containerVenduto>
+
+
+                <div id="infoMacroRegion"></div>
+                <br>
+                <div id="infoRegion"></div>
+                <br>
+                <div id="infoProvince"></div>
+                <br>
+                <div id="infoVenduto"></div> mln
+
+
+
+            </div>
+
+        </div>
 
     </div>
 
-<div style="display:none;" id="myDiv" class="animate-bottom">
- 
-<br>
-<br>
-
-<div id = 'infoContainer'>
-    
-    <div id='cityName'> <h3 id='infoCity'></h3></div>
-  
-<div id = containerVenduto>
-
-  
-    <div id="infoMacroRegion"></div> 
-    <br>
-    <div id="infoRegion"></div> 
-    <br>
-    <div id="infoProvince"></div> 
-    <br>
-    <div id="infoVenduto"></div> mln 
-
-
-
-</div>
-
-</div>
-
-</div>
-
- <div class="canva"></div>
+    <div class="canva"></div>
 
 
 </body>
 
-<script src = 'jsFile.js'></script>
+<script src='jsFile.js'></script>
+
 </html>
