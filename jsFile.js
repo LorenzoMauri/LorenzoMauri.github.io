@@ -1,5 +1,8 @@
 // variabili globali
 var filteredData;
+var data ; 
+
+
 var cities = urlParser().split(',') // "lecco,milano" -> ["lecco", "milano"]
 var margin = {
   top: 50,
@@ -37,6 +40,7 @@ function lastDay() {
   for (i = 0; i < 10; i++) {
     dates.push(filteredData[i].data)
   }
+  filteredData = (data.filter((d) => d.data == dates[0])) ;
   console.log(dates)
 }
 
@@ -78,7 +82,8 @@ function loadData() {
 
   d3.csv("https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/data.csv")
     .get(function (data) {
-      filteredData = (data.filter((data) => cities.includes(data.citta)))
+      var data = data ;
+      filteredData = data.filter((data) => cities.includes(data.citta));
 
       console.log(filteredData)
 
