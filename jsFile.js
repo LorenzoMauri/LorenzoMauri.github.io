@@ -81,11 +81,11 @@ function showStatsContainer() {
 
 function loadData() {
 
-  d3.csv("https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/data.csv")
+  d3.csv("https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/detailsPanelData.csv")
     .get(function (data) {
       var data = data ;
       console.log(data)
-      filteredData = data.filter((data) => cities.includes(data.citta));
+      filteredData = data.filter((data) => cities.includes(data.city));
 
       console.log(filteredData)
 
@@ -95,9 +95,9 @@ function loadData() {
       document.getElementById('numRowsCsv').textContent = data.length
       document.getElementById('infoVenduto').textContent = (counter / 1e06).toFixed(2);
 
-      document.getElementById('infoProvince').textContent = filteredData[0].provincia
-      document.getElementById('infoRegion').textContent = filteredData[0].regione
-      document.getElementById('infoMacroRegion').textContent = filteredData[0].macroregione
+      document.getElementById('infoProvince').textContent = filteredData[0].province
+      document.getElementById('infoRegion').textContent = filteredData[0].region
+      document.getElementById('infoMacroRegion').textContent = filteredData[0].macroRegion
 
       showStatsContainer();
 
@@ -110,8 +110,8 @@ function loadData() {
       var data = []
       for (i = 0; i < filteredData.length; i++) {
         dict = {
-          'Country': filteredData[i]['payment method'],
-          'Value': parseInt(filteredData[i].venduto, 10)
+          'Country': filteredData[i]['method'],
+          'Value': parseInt(filteredData[i].methodValue, 10)
         }
         data.push(dict)
       }
