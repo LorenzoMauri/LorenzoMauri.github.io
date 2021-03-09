@@ -22,7 +22,7 @@ function urlParser() {
   var city = url.searchParams.get("city");
   return city;
 }
-console.log(cities)
+
 function aggregatorSold(filteredData) {
   var counter = 0
   for (i = 0; i < filteredData.length; i++) {
