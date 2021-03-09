@@ -4,6 +4,7 @@ var data ;
 
 
 var cities = urlParser().split(',') // "lecco,milano" -> ["lecco", "milano"]
+
 var margin = {
   top: 50,
   right: 30,
@@ -21,7 +22,7 @@ function urlParser() {
   var city = url.searchParams.get("city");
   return city;
 }
-
+console.log(cities)
 function aggregatorSold(filteredData) {
   var counter = 0
   for (i = 0; i < filteredData.length; i++) {
@@ -83,6 +84,7 @@ function loadData() {
   d3.csv("https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/data.csv")
     .get(function (data) {
       var data = data ;
+      console.log(data)
       filteredData = data.filter((data) => cities.includes(data.citta));
 
       console.log(filteredData)
