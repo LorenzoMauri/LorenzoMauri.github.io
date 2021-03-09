@@ -69,7 +69,7 @@ function animateTitle() {
 
 function showPage() {
   animateTitle();
-  setTimeout(loadData, 2600); // il setTimeout simula il caricamento dei dati
+  setTimeout(loadData, 0); // il setTimeout simula il caricamento dei dati
 }
 
 function showStatsContainer() {
@@ -90,7 +90,7 @@ function loadData() {
       var counter = aggregatorSold(filteredData)
 
       document.getElementById('infoCity').textContent = cities.join(", ");
-
+      document.getElementById('numRowsCsv').textContent = data.length
       document.getElementById('infoVenduto').textContent = (counter / 1e06).toFixed(2);
 
       document.getElementById('infoProvince').textContent = filteredData[0].provincia
