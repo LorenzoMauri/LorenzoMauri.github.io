@@ -23,10 +23,10 @@ function urlParser() {
   return city;
 }
 
-function aggregatorSold(filteredData) {
+function computeTotalSold(filteredData) {
   var counter = 0
   for (i = 0; i < filteredData.length; i++) {
-    a = parseInt(filteredData[i].venduto, 10)
+    a = parseInt(filteredData[i].methodValue, 10)
 
     var counter = a + counter
 
@@ -34,7 +34,7 @@ function aggregatorSold(filteredData) {
   return counter
 }
 
-function lastDay() {
+function lastDayFilter() {
   if (!filteredData) return;
 
   var dates = []
@@ -89,7 +89,7 @@ function loadData() {
 
       console.log(filteredData)
 
-      var counter = aggregatorSold(filteredData)
+      var counter = computeTotalSold(filteredData)
 
       document.getElementById('infoCity').textContent = cities.join(", ");
       document.getElementById('numRowsCsv').textContent = data.length
@@ -110,8 +110,8 @@ function loadData() {
       var data = []
       for (i = 0; i < filteredData.length; i++) {
         dict = {
-          'Country': filteredData[i]['method'],
-          'Value': parseInt(filteredData[i].methodValue, 10)
+          'paymentMethod': filteredData[i]['method'],
+          'value': parseInt(filteredData[i].methodValue, 10)
         }
         data.push(dict)
       }
@@ -134,7 +134,7 @@ function loadData() {
       var x = d3.scaleBand()
         .range([0, width])
         .domain(data.map(function (d) {
-          return d.Country;
+          return d.paymentMethod;
         }))
         .padding(0.2);
       svg.append("g")
@@ -147,7 +147,7 @@ function loadData() {
       // Add Y axis
       var count = 0
       for (i = 0; i < data.length; i++) {
-        value = parseInt(data[i].Value, 10)
+        value = parseInt(data[i].value, 10)
         if (value > count) {
           count = value
 
@@ -170,7 +170,7 @@ function loadData() {
         .enter()
         .append("rect")
         .attr("x", function (d) {
-          return x(d.Country);
+          return x(d.paymentMethod);
         })
         .attr("width", x.bandwidth())
         .attr("fill", "#e4a965")
@@ -183,7 +183,7 @@ function loadData() {
           return y(0);
         })
         .on('mouseover', function (d) {
-          var value = d.Value / 1e06;
+          var value = d.value / 1e06;
           document.getElementById('infoVenduto').textContent = value.toFixed(2)
         })
         .on('mouseout', function (d) {
@@ -198,10 +198,10 @@ function loadData() {
         .transition()
         .duration(900)
         .attr("y", function (d) {
-          return y(d.Value);
+          return y(d.value);
         })
         .attr("height", function (d) {
-          return height - y(d.Value);
+          return height - y(d.value);
         })
 
         .delay(function (d, i) {
