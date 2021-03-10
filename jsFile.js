@@ -23,7 +23,7 @@ function urlParser() {
   return city;
 }
 
-function computeTotalSold(filteredData) {
+function aggregatorSold(filteredData) {
   var counter = 0
   for (i = 0; i < filteredData.length; i++) {
     a = parseInt(filteredData[i].methodValue, 10)
@@ -34,7 +34,7 @@ function computeTotalSold(filteredData) {
   return counter
 }
 
-function lastDayFilter() {
+function lastDay() {
   if (!filteredData) return;
 
   var dates = []
@@ -89,7 +89,7 @@ function loadData() {
 
       console.log(filteredData)
 
-      var counter = computeTotalSold(filteredData)
+      var counter = aggregatorSold(filteredData)
 
       document.getElementById('infoCity').textContent = cities.join(", ");
       document.getElementById('numRowsCsv').textContent = data.length
@@ -111,103 +111,65 @@ function loadData() {
       for (i = 0; i < filteredData.length; i++) {
         dict = {
           'paymentMethod': filteredData[i]['method'],
-          'value': parseInt(filteredData[i].methodValue, 10)
+          'Value': parseInt(filteredData[i].methodValue, 10)
         }
         data.push(dict)
       }
       //console.log(data)
 
-
+console.log(data)
+      
+      
+      // set the dimensions and margins of the graph
+      var margin = {top: 100, right: 300, bottom: 30, left: 100},
+          width = 960 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
+      
+      // set the ranges
+      var y = d3.scaleBand()
+                .range([height, 0])
+                .padding(0.1);
+      
+      var x = d3.scaleLinear()
+                .range([0, width]);
+                
       // append the svg object to the body of the page
-      var svg = d3.select(".canva")
-        .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+      // append a 'group' element to 'svg'
+      // moves the 'group' element to the top left margin
+      var svg = d3.select("body").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
         .append("g")
-        .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+          .attr("transform", 
+                "translate(" + margin.left + "," + margin.top + ")");
+      
+        
+                
+      
+        // Scale the range of the data in the domains
+        x.domain([0, d3.max(data, function(d){ return d.Value; })])
+        y.domain(data.map(function(d) { return d.paymentMethod; }));
+        //y.domain([0, d3.max(data, function(d) { return d.sales; })]);
+      
+        // append the rectangles for the bar chart
+        svg.selectAll(".bar")
+            .data(data)
+          .enter().append("rect")
+            .attr("class", "bar")
+            //.attr("x", function(d) { return x(d.sales); })
+            .attr("width", function(d) {return x(d.Value); } )
+            .attr("y", function(d) { return y(d.paymentMethod); })
+            .attr("height", y.bandwidth());
+      
+        // add the x Axis
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+      
+        // add the y Axis
+        svg.append("g")
+            .call(d3.axisLeft(y));
 
-      // Parse the Data
-
-      //console.log(data)
-      // X axis
-      var x = d3.scaleBand()
-        .range([0, width])
-        .domain(data.map(function (d) {
-          return d.paymentMethod;
-        }))
-        .padding(0.2);
-      svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x))
-        .selectAll("text")
-        .attr("transform", "translate(-10,0)rotate(-45)")
-        .style("text-anchor", "end");
-
-      // Add Y axis
-      var count = 0
-      for (i = 0; i < data.length; i++) {
-        value = parseInt(data[i].value, 10)
-        if (value > count) {
-          count = value
-
-        }
-
-      }
-
-
-      var y = d3.scaleLinear()
-        .domain([0, count * 1.3])
-        .range([height, 0]);
-      svg.append("g")
-        .call(d3.axisLeft(y));
-
-      // Bars
-
-
-      svg.selectAll("mybar")
-        .data(data)
-        .enter()
-        .append("rect")
-        .attr("x", function (d) {
-          return x(d.paymentMethod);
-        })
-        .attr("width", x.bandwidth())
-        .attr("fill", "#e4a965")
-
-        // no bar at the beginning thus:
-        .attr("height", function (d) {
-          return height - y(0);
-        }) // always equal to 0
-        .attr("y", function (d) {
-          return y(0);
-        })
-        .on('mouseover', function (d) {
-          var value = d.value / 1e06;
-          document.getElementById('infoVenduto').textContent = value.toFixed(2)
-        })
-        .on('mouseout', function (d) {
-          var c = (counter / 1e06).toFixed(2);
-          document.getElementById('infoVenduto').textContent = c
-        })
-      //on('mouseout',)
-
-
-      // Animation
-      svg.selectAll("rect")
-        .transition()
-        .duration(900)
-        .attr("y", function (d) {
-          return y(d.value);
-        })
-        .attr("height", function (d) {
-          return height - y(d.value);
-        })
-
-        .delay(function (d, i) {
-          console.log(i);
-          return (i * 100)
-        })
 
 
     });

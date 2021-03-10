@@ -4,6 +4,9 @@ background-color: rgb(255, 255, 255);
 height: 800px;
 width: 400px;}
 
+
+.bar { fill: rgb(241, 178, 77); }  
+
 #containerVenduto {
       position: relative;
       height: 170px;
@@ -47,10 +50,6 @@ font-style: italic;}
 #cityName{text-align: center;
           vertical-align: middle;
           line-height: 100px;}
-.canva{
-  position: absolute;
-  top : 230pt;
-}
 
 .loader {
   position: absolute;
