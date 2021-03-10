@@ -84,7 +84,7 @@ function loadData() {
   d3.csv("https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/detailsPanelData.csv")
     .get(function (data) {
       var data = data ;
-      console.log(data)
+      
       filteredData = data.filter((data) => cities.includes(data.city));
 
       console.log(filteredData)
@@ -111,18 +111,18 @@ function loadData() {
       for (i = 0; i < filteredData.length; i++) {
         dict = {
           'paymentMethod': filteredData[i]['method'],
-          'Value': parseInt(filteredData[i].methodValue, 10)
+          'Value': filteredData[i].methodValue / 1000
         }
         data.push(dict)
       }
-      //console.log(data)
+    
 
 console.log(data)
       
       
       // set the dimensions and margins of the graph
-      var margin = {top: 100, right: 300, bottom: 30, left: 100},
-          width = 960 - margin.left - margin.right,
+      var margin = {top: 80, right: 30, bottom: 30, left: 100},
+          width = 500 - margin.left - margin.right,
           height = 500 - margin.top - margin.bottom;
       
       // set the ranges
