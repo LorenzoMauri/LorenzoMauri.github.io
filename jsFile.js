@@ -34,16 +34,22 @@ function aggregatorSold(filteredData) {
   return counter
 }
 
-function lastDay() {
-  if (!filteredData) return;
+
+
+function lastMonth() {
+  var data = filteredData
+  if (!filteredData);
 
   var dates = []
   for (i = 0; i < 10; i++) {
     dates.push(filteredData[i].data)
   }
-  filteredData = (data.filter((d) => d.data == dates[0])) ;
-  console.log(dates)
-}
+  filteredData = data.filter((d) => d.month == 3) ;
+  return filteredData
+  }
+
+
+
 
 function animateTitle() {
   // Wrap every letter in a span
@@ -76,8 +82,23 @@ function showPage() {
 function showStatsContainer() {
   document.getElementById("loader").style.display = "none";
   document.getElementById("statsContainer").style.display = "block";
-  document.getElementById("lastDayButton").disabled = false;
+  document.getElementById("lastMonthButton").disabled = false;
 }
+function load_Data(){ // successivamente rinominare in loadData 
+console.log(8)}
+// quando carico all'inizio la pagina,
+// questa funzione deve caricare tutti i dati 
+
+function update(){
+
+console.log(8)}
+// questa funzione aggiorna l'istogramma successivamente
+// alla selezione di un filtro 
+
+
+
+
+
 
 function loadData() {
 
@@ -87,7 +108,7 @@ function loadData() {
       
       filteredData = data.filter((data) => cities.includes(data.city));
 
-      console.log(filteredData)
+      //console.log(filteredData)
 
       var counter = aggregatorSold(filteredData)
 
@@ -117,7 +138,7 @@ function loadData() {
       }
     
 
-console.log(data)
+
       
       
       // set the dimensions and margins of the graph
@@ -159,8 +180,9 @@ console.log(data)
             //.attr("x", function(d) { return x(d.sales); })
             .attr("width", function(d) {return x(d.Value); } )
             .attr("y", function(d) { return y(d.paymentMethod); })
-            .attr("height", y.bandwidth());
-      
+            .attr("height", y.bandwidth())
+            ;
+            
         // add the x Axis
         svg.append("g")
             .attr("transform", "translate(0," + height + ")")
