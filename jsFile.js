@@ -143,15 +143,24 @@ function updateHist(data){
   //y.domain([0, d3.max(data, function(d) { return d.sales; })]);
 
   // append the rectangles for the bar chart
-  svg.selectAll(".bar")
+  var u = svg.selectAll(".bar")
       .data(data)
+
+      u
     .enter().append("rect")
+    .merge(u)
+    .transition()
+    .duration(1500)
       .attr("class", "bar")
       //.attr("x", function(d) { return x(d.sales); })
       .attr("width", function(d) {return x(d.Value); } )
       .attr("y", function(d) { return y(d.paymentMethod); })
       .attr("height", y.bandwidth())
       ;
+
+    u
+    .exit()
+    .remove()
       
   // add the x Axis
   svg.append("g")
@@ -161,6 +170,8 @@ function updateHist(data){
   // add the y Axis
   svg.append("g")
       .call(d3.axisLeft(y));
+
+      
 }
 
 
