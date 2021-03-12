@@ -40,9 +40,8 @@ function aggregatorSold(data) {
 function lastMonth(data) {
   if (!data){return ;};
   var filteredData = data.filter((d) => d.month == 3) ;
-  //console.log(filteredData)
-
-  }
+  return filteredData
+}
 
 
 
@@ -89,7 +88,7 @@ function aggregatePaymentMethodValue(data){
 
 const result = data.reduce((a, {paymentMethod, Value}) => {
     a[paymentMethod] = a[paymentMethod] || {paymentMethod,  Value: 0};
-    a[paymentMethod].Value += Value;
+    a[paymentMethod].Value += Number(Value);
     return a;
   }, {}) ; 
 return Object.values(result)}
@@ -110,7 +109,7 @@ return Object.values(result)}
 
 
 function updateHist(data){
-  var data = data 
+  
   //console.log(data);
   // set the dimensions and margins of the graph
   var margin = {top: 80, right: 30, bottom: 30, left: 100},
@@ -139,7 +138,7 @@ function updateHist(data){
           
 
   // Scale the range of the data in the domains
-  x.domain([0, d3.max(data, function(d){ return d.Value; })])
+  x.domain([0, d3.max(data, function(d){ return d.Value*1.2; })])
   y.domain(data.map(function(d) { return d.paymentMethod; }));
   //y.domain([0, d3.max(data, function(d) { return d.sales; })]);
 
@@ -184,12 +183,9 @@ function loadData() {
 
   d3.csv("https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/detailsPanelData.csv")
     .get(function (data) {
-      var data = data ;
       
       filteredData = data.filter((data) => cities.includes(data.city));
-      //console.log(filteredData)
-      //console.log(filteredData)
-
+      
       var counter = aggregatorSold(filteredData)
 
       document.getElementById('infoCity').textContent = cities.join(", ");
@@ -208,12 +204,15 @@ function loadData() {
       // a barre 
 
 
-    
+      //console.log(filteredData)
+      filteredData= selectData(filteredData)
+      filteredData = aggregatePaymentMethodValue(filteredData)
+
  
-var data = selectData(filteredData)
-console.log(data)
-      
-      updateHist(data);
+//console.log(filteredData)
+//console.log(data)
+      console.log(filteredData);
+      updateHist(filteredData);
 
 
 
@@ -222,7 +221,46 @@ console.log(data)
 
 // document.addEventListener("DOMContentLoaded", loadData);
 
+function updateAllData(){
+d3.csv("https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/detailsPanelData.csv")
+    .get(function (data) {
+      // filtro per città
+      var filteredData = data.filter((data) => cities.includes(data.city));
+      // filtro per mese 
+      var filteredData = lastMonth(filteredData);
+      console.log(filteredData)
+      var counter = aggregatorSold(filteredData);
 
+      document.getElementById('infoCity').textContent = cities.join(", ");
+      document.getElementById('numRowsCsv').textContent = data.length
+      document.getElementById('infoVenduto').textContent = (counter / 1e06).toFixed(2);
+
+      document.getElementById('infoProvince').textContent = filteredData[0].province
+      document.getElementById('infoRegion').textContent = filteredData[0].region
+      document.getElementById('infoMacroRegion').textContent = filteredData[0].macroRegion
+
+      showStatsContainer();
+
+
+
+      // da qui in poi la variabile data viene cambiata per costruire il grafico 
+      // a barre 
+
+
+      //console.log(filteredData)
+      var filteredData= selectData(filteredData)
+      var filteredData = aggregatePaymentMethodValue(filteredData)
+
+ 
+//console.log(filteredData)
+//console.log(data)
+      console.log(filteredData);
+      updateHist(filteredData);
+
+
+
+    })
+};
 
 
 //const canva = d3.select('.canva');
