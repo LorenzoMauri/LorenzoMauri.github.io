@@ -23,10 +23,11 @@ function urlParser() {
   return city;
 }
 
-function aggregatorSold(filteredData) {
+// aggrega le informazioni sul venduto per metodo di pagamento
+function aggregatorSold(data) {
   var counter = 0
-  for (i = 0; i < filteredData.length; i++) {
-    a = parseInt(filteredData[i].methodValue, 10)
+  for (i = 0; i < data.length; i++) {
+    a = parseInt(data[i].methodValue, 10)
 
     var counter = a + counter
 
@@ -36,16 +37,11 @@ function aggregatorSold(filteredData) {
 
 
 
-function lastMonth() {
-  var data = filteredData
-  if (!filteredData);
+function lastMonth(data) {
+  if (!data){return ;};
+  var filteredData = data.filter((d) => d.month == 3) ;
+  //console.log(filteredData)
 
-  var dates = []
-  for (i = 0; i < 10; i++) {
-    dates.push(filteredData[i].data)
-  }
-  filteredData = data.filter((d) => d.month == 3) ;
-  return filteredData
   }
 
 
@@ -74,7 +70,9 @@ function animateTitle() {
     });
 }
 
+// mostra la pagina iniziale
 function showPage() {
+ 
   animateTitle();
   setTimeout(loadData, 0); // il setTimeout simula il caricamento dei dati
 }
@@ -84,20 +82,107 @@ function showStatsContainer() {
   document.getElementById("statsContainer").style.display = "block";
   document.getElementById("lastMonthButton").disabled = false;
 }
-function load_Data(){ // successivamente rinominare in loadData 
-console.log(8)}
+
+
+
+function aggregatePaymentMethodValue(data){
+
+const result = data.reduce((a, {paymentMethod, Value}) => {
+    a[paymentMethod] = a[paymentMethod] || {paymentMethod,  Value: 0};
+    a[paymentMethod].Value += Value;
+    return a;
+  }, {}) ; 
+return Object.values(result)}
+
+
+
+// questi sono i valori che devono venire mostrati sulle barre
+
+k=aggregatePaymentMethodValue([
+    {paymentMethod: "outstanding", Value:90},
+  {paymentMethod: "outstanding", Value:8},
+  {paymentMethod: "out", Value:4},
+  {paymentMethod: "out", Value:20}]);
+
+
+  updateHist(k)
 // quando carico all'inizio la pagina,
 // questa funzione deve caricare tutti i dati 
 
-function update(){
 
-console.log(8)}
 // questa funzione aggiorna l'istogramma successivamente
 // alla selezione di un filtro 
 
 
+function updateHist(data){
+  var data = data 
+  //console.log(data);
+  // set the dimensions and margins of the graph
+  var margin = {top: 80, right: 30, bottom: 30, left: 100},
+  width = 500 - margin.left - margin.right,
+  height = 500 - margin.top - margin.bottom;
+
+  // set the ranges
+  var y = d3.scaleBand()
+          .range([height, 0])
+          .padding(0.1);
+
+  var x = d3.scaleLinear()
+          .range([0, width]);
+          
+  // append the svg object to the body of the page
+  // append a 'group' element to 'svg'
+  // moves the 'group' element to the top left margin
+  var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
 
 
+          
+
+  // Scale the range of the data in the domains
+  x.domain([0, d3.max(data, function(d){ return d.Value; })])
+  y.domain(data.map(function(d) { return d.paymentMethod; }));
+  //y.domain([0, d3.max(data, function(d) { return d.sales; })]);
+
+  // append the rectangles for the bar chart
+  svg.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      //.attr("x", function(d) { return x(d.sales); })
+      .attr("width", function(d) {return x(d.Value); } )
+      .attr("y", function(d) { return y(d.paymentMethod); })
+      .attr("height", y.bandwidth())
+      ;
+      
+  // add the x Axis
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+  // add the y Axis
+  svg.append("g")
+      .call(d3.axisLeft(y));
+}
+
+
+function selectData(data){
+  
+  var array= []
+      for (i = 0; i < data.length; i++) {
+        dict = {
+          'paymentMethod' : data[i]['method'],
+          'Value' : data[i]['methodValue']
+        }
+      array.push(dict)
+      };
+ return array
+  
+}
 
 
 function loadData() {
@@ -107,7 +192,7 @@ function loadData() {
       var data = data ;
       
       filteredData = data.filter((data) => cities.includes(data.city));
-
+      //console.log(filteredData)
       //console.log(filteredData)
 
       var counter = aggregatorSold(filteredData)
@@ -128,74 +213,17 @@ function loadData() {
       // a barre 
 
 
-      var data = []
-      for (i = 0; i < filteredData.length; i++) {
-        dict = {
-          'paymentMethod': filteredData[i]['method'],
-          'Value': filteredData[i].methodValue / 1000
-        }
-        data.push(dict)
-      }
     
-
-
+ 
+var data = selectData(filteredData)
+console.log(data)
       
-      
-      // set the dimensions and margins of the graph
-      var margin = {top: 80, right: 30, bottom: 30, left: 100},
-          width = 500 - margin.left - margin.right,
-          height = 500 - margin.top - margin.bottom;
-      
-      // set the ranges
-      var y = d3.scaleBand()
-                .range([height, 0])
-                .padding(0.1);
-      
-      var x = d3.scaleLinear()
-                .range([0, width]);
-                
-      // append the svg object to the body of the page
-      // append a 'group' element to 'svg'
-      // moves the 'group' element to the top left margin
-      var svg = d3.select("body").append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-          .attr("transform", 
-                "translate(" + margin.left + "," + margin.top + ")");
-      
-        
-                
-      
-        // Scale the range of the data in the domains
-        x.domain([0, d3.max(data, function(d){ return d.Value; })])
-        y.domain(data.map(function(d) { return d.paymentMethod; }));
-        //y.domain([0, d3.max(data, function(d) { return d.sales; })]);
-      
-        // append the rectangles for the bar chart
-        svg.selectAll(".bar")
-            .data(data)
-          .enter().append("rect")
-            .attr("class", "bar")
-            //.attr("x", function(d) { return x(d.sales); })
-            .attr("width", function(d) {return x(d.Value); } )
-            .attr("y", function(d) { return y(d.paymentMethod); })
-            .attr("height", y.bandwidth())
-            ;
-            
-        // add the x Axis
-        svg.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x));
-      
-        // add the y Axis
-        svg.append("g")
-            .call(d3.axisLeft(y));
+      updateHist(data);
 
 
 
-    });
-}
+    })
+};
 
 // document.addEventListener("DOMContentLoaded", loadData);
 
@@ -206,4 +234,4 @@ function loadData() {
 //const svg = canva.append('svg')
 //.attr('width','500')
 //.attr('height','500');
-//svg.append('rect').attr('x','10').attr('y','20')
+//svg.append('rect').attr('x','10').attr('y','20');
