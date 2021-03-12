@@ -98,11 +98,6 @@ return Object.values(result)}
 
 // questi sono i valori che devono venire mostrati sulle barre
 
-k=aggregatePaymentMethodValue([
-    {paymentMethod: "outstanding", Value:90},
-  {paymentMethod: "outstanding", Value:8},
-  {paymentMethod: "out", Value:4},
-  {paymentMethod: "out", Value:20}]);
 
 
  
