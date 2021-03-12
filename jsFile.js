@@ -105,7 +105,7 @@ k=aggregatePaymentMethodValue([
   {paymentMethod: "out", Value:20}]);
 
 
-  updateHist(k)
+ 
 // quando carico all'inizio la pagina,
 // questa funzione deve caricare tutti i dati 
 
