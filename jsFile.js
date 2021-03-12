@@ -109,7 +109,7 @@ return Object.values(result)}
 
 
 function updateHist(data){
-  
+  var data = data ;
   //console.log(data);
   // set the dimensions and margins of the graph
   var margin = {top: 80, right: 30, bottom: 30, left: 100},
@@ -225,10 +225,12 @@ function updateAllData(){
 d3.csv("https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/detailsPanelData.csv")
     .get(function (data) {
       // filtro per città
+      
       var filteredData = data.filter((data) => cities.includes(data.city));
       // filtro per mese 
       var filteredData = lastMonth(filteredData);
       console.log(filteredData)
+   
       var counter = aggregatorSold(filteredData);
 
       document.getElementById('infoCity').textContent = cities.join(", ");
@@ -248,14 +250,14 @@ d3.csv("https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/ma
 
 
       //console.log(filteredData)
-      var filteredData= selectData(filteredData)
-      var filteredData = aggregatePaymentMethodValue(filteredData)
+      var filteredData_selected= selectData(filteredData)
+      var filteredData_selected = aggregatePaymentMethodValue(filteredData)
 
  
 //console.log(filteredData)
 //console.log(data)
-      console.log(filteredData);
-      updateHist(filteredData);
+      console.log(filteredData_selected);
+      updateHist(filteredData_selected);
 
 
 
