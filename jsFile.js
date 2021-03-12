@@ -183,7 +183,7 @@ function loadData() {
 
   d3.csv("https://raw.githubusercontent.com/LorenzoMauri/LorenzoMauri.github.io/master/detailsPanelData.csv")
     .get(function (data) {
-      
+      console.log(data)
       filteredData = data.filter((data) => cities.includes(data.city));
       
       var counter = aggregatorSold(filteredData)
