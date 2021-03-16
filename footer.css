@@ -1,6 +1,11 @@
+.body{height : 500px ;
+        width : 500px ; 
+        background-color: rgb(61, 58, 58);}
 
 .innerBox {
-    background-color:rgb(125, 155, 177);
+    border-radius: 12px;
+    background-color:rgb(150, 67, 74);
+    margin: 20px;
 }
 
 
