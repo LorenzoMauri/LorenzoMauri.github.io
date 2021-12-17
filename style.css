@@ -1,5 +1,10 @@
+body{height: 100%;
+    width: 100%;}
 #header{
+    text-align:middle;
     width  :60%;
-    height : 60%;
-    background-color: black
+    height : 50%;
+    font-size: 20px;
+    font-family: monospace;
+    background-color: rgb(226, 187, 187);
     } 
